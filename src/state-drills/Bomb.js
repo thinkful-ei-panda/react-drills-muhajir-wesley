@@ -8,38 +8,43 @@ class Bomb extends React.Component {
     }
 
     componentDidMount() {
-        let interval = setInterval(() => {
-          this.setState({
-              count:{interval}
-          })
-          if(this.state.count<8&&this.state.count%2===0){
+        this.interval = setInterval(() => {
+            this.setState({
+                count:this.state.count+1
+            })
+            if(this.state.count<8&&this.state.count%2===0){
             this.setState({
                 display:'tick'              
             })
-          }else if(this.state.count<8&&this.state.count%2===1){
+            }else if(this.state.count<8&&this.state.count%2===1){
             this.setState({
                 display:'tock'              
             })
-          }else{
+            }else{
             this.setState({
+                count:0,
                 display:'BOOM!'                             
             })
-            clearInterval(interval) 
-          }
+            clearInterval(this.interval)        
+            }
         }, 1000)
-      }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    } 
      
 
 
-  render() {
-    return (
+    render() {
+        return (
 
-       <div>
-        <p>{this.state.display}</p>        
-       </div>
+        <div>
+            <p>{this.state.display}</p>        
+        </div>
 
-    );
-  }
+        );
+    }
 }
 
 export default Bomb;
